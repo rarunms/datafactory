@@ -1,0 +1,10 @@
+{
+	"name": "BlobFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureBlob"
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"name": "InputFile",
+	"properties": {
+		"sources": [
+			{
+				"dataset": {
+					"referenceName": "BlobFile",
+					"type": "DatasetReference"
+				},
+				"name": "source1",
+				"script": "source(allowSchemaDrift: true,validateSchema: false) ~> source1"
+			}
+		]
+	}
+}
