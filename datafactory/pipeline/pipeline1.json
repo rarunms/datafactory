@@ -4,7 +4,13 @@
 		"activities": [
 			{
 				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline"
+				"type": "ExecutePipeline",
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pipeline2",
+						"type": "PipelineReference"
+					}
+				}
 			}
 		]
 	}
