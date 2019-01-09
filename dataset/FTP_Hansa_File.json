@@ -9,13 +9,17 @@
 		"typeProperties": {
 			"format": {
 				"type": "TextFormat",
-				"columnDelimiter": ",",
+				"columnDelimiter": ";",
 				"rowDelimiter": "",
+				"quoteChar": "\"",
 				"nullValue": "\\N",
+				"encodingName": null,
 				"treatEmptyAsNull": true,
 				"skipLineCount": 0,
-				"firstRowAsHeader": false
-			}
+				"firstRowAsHeader": true
+			},
+			"fileName": "SampleDaily_onerecord",
+			"folderPath": "ftp"
 		}
 	}
 }
