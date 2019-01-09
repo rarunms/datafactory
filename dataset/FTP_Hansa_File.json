@@ -1,0 +1,21 @@
+{
+	"name": "FTP_Hansa_File",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Hansa_FTP_Storage",
+			"type": "LinkedServiceReference"
+		},
+		"type": "FileShare",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			}
+		}
+	}
+}
