@@ -1,0 +1,13 @@
+{
+	"name": "CosmosDbMongoDbApiCollection1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Destination_CosmosDB",
+			"type": "LinkedServiceReference"
+		},
+		"type": "CosmosDbMongoDbApiCollection",
+		"typeProperties": {
+			"collection": "hansa"
+		}
+	}
+}
