@@ -134,7 +134,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CosmosDbMongoDbApiCollection1",
+						"referenceName": "CosmosDb_Hansa_Collection",
 						"type": "DatasetReference"
 					}
 				]
