@@ -1,0 +1,550 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "loadhansadata"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyHansaFiles')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-07-01-preview",
+			"properties": {
+				"activities": [
+					{
+						"name": "LoadHansaFileContents",
+						"type": "Copy",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "ftp/SampleDaily_onerecord"
+							},
+							{
+								"name": "Destination",
+								"value": "hansa"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": false
+							},
+							"sink": {
+								"type": "CosmosDbMongoDbApiSink",
+								"writeBatchTimeout": "00:30:00",
+								"writeBatchSize": 10000,
+								"writeBehavior": "insert"
+							},
+							"enableStaging": false,
+							"dataIntegrationUnits": 0,
+							"translator": {
+								"type": "TabularTranslator",
+								"schemaMapping": {
+									"STATUS": "STATUS",
+									"ISIN": "ISIN",
+									"INST_TYPE": "INST_TYPE",
+									"TYPE_CODE": "TYPE_CODE",
+									"ID": "ID",
+									"NAME": "NAME",
+									"POS_UNIT": "POS_UNIT",
+									"PORTFOLIO": "PORTFOLIO",
+									"SECTOR": "SECTOR",
+									"ISSUER": "ISSUER",
+									"COUNTERPARTY": "COUNTERPARTY",
+									"COUNTRY_OF_RISK": "COUNTRY_OF_RISK",
+									"CURR": "CURR",
+									"SPOT": "SPOT",
+									"COST_OF_CARRY": "COST_OF_CARRY",
+									"CASHFLOW": "CASHFLOW",
+									"STRIKE": "STRIKE",
+									"CONTRACT_SIZE": "CONTRACT_SIZE",
+									"ISSUE_DATE": "ISSUE_DATE",
+									"MATURITY": "MATURITY",
+									"CALL": "CALL",
+									"VOLATILITY": "VOLATILITY",
+									"UNDERLYING": "UNDERLYING",
+									"GOVERNMENT_BOND": "GOVERNMENT_BOND",
+									"COUPON_RATE": "COUPON_RATE",
+									"LAST_REG_COUP_DATE": "LAST_REG_COUP_DATE",
+									"ODD_FIRST_COUP": "ODD_FIRST_COUP",
+									"ODD_LAST_COUP": "ODD_LAST_COUP",
+									"ODD_FIRST_COUP_RATE": "ODD_FIRST_COUP_RATE",
+									"TERM": "TERM",
+									"BUSINESS_DAY_RULE": "BUSINESS_DAY_RULE",
+									"FLOAT_REF_IDX": "FLOAT_REF_IDX",
+									"SPREAD": "SPREAD",
+									"LAST_RESET_RATE": "LAST_RESET_RATE",
+									"NOTIONAL": "NOTIONAL",
+									"UNDERL_MATURITY": "UNDERL_MATURITY",
+									"UNDERL_ENTITIES": "UNDERL_ENTITIES",
+									"COMP_WEIGHT": "COMP_WEIGHT",
+									"STRUCTURED_CASHFLOW": "STRUCTURED_CASHFLOW",
+									"REF_TYPE": "REF_TYPE",
+									"SWAP_NOTIONAL": "SWAP_NOTIONAL",
+									"FIX_COUP_DATE": "FIX_COUP_DATE",
+									"PREMIUM_START": "PREMIUM_START",
+									"PREMIUM_END": "PREMIUM_END",
+									"NOTIONAL_START": "NOTIONAL_START",
+									"NOTIONAL_END": "NOTIONAL_END",
+									"EXERCISE_SCHEDULE": "EXERCISE_SCHEDULE",
+									"PUTABLE": "PUTABLE",
+									"CORRELATION": "CORRELATION",
+									"CONV_PRICE": "CONV_PRICE",
+									"CONV_START_DATE": "CONV_START_DATE",
+									"CONV_END_DATE": "CONV_END_DATE",
+									"REDEMPTION_BARRIER": "REDEMPTION_BARRIER",
+									"CTD_BOND": "CTD_BOND",
+									"EURO_VALUE": "EURO_VALUE",
+									"KAG_FX": "KAG_FX",
+									"RECOVERY_RATE": "RECOVERY_RATE",
+									"AMORTIZING": "AMORTIZING",
+									"RATING": "RATING",
+									"FACTOR": "FACTOR",
+									"INFO": "INFO",
+									"PREMIUM": "PREMIUM",
+									"CALLABLE": "CALLABLE",
+									"STRIKE_BOND_CALL": "STRIKE_BOND_CALL",
+									"REDEMPTION_REFERENCE": "REDEMPTION_REFERENCE",
+									"CONVERTIBLE_AFTER_CALL": "CONVERTIBLE_AFTER_CALL",
+									"CALL_DATE": "CALL_DATE",
+									"CALL_TYPE": "CALL_TYPE",
+									"EXCHANGEABLE": "EXCHANGEABLE",
+									"NOTIONAL_PER_BOND": "NOTIONAL_PER_BOND",
+									"BARRIER": "BARRIER",
+									"BARRIER_HIT": "BARRIER_HIT",
+									"REBATE": "REBATE",
+									"PUT_TYPE": "PUT_TYPE",
+									"WAL": "WAL",
+									"POOLFACTOR": "POOLFACTOR",
+									"FIXINGS_SO_FAR": "FIXINGS_SO_FAR",
+									"FIXINGS_TOTAL": "FIXINGS_TOTAL",
+									"FIXING_PERIOD": "FIXING_PERIOD",
+									"FIXINGS": "FIXINGS",
+									"DIGITAL": "DIGITAL",
+									"DIGITAL_PAYOFF": "DIGITAL_PAYOFF",
+									"VV_NAME": "VV_NAME",
+									"OPTION_SCHEDULE": "OPTION_SCHEDULE",
+									"RIC": "RIC"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FTP_Hansa_File",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CosmosDb_Hansa_Collection",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/FTP_Hansa_File')]",
+				"[concat(variables('factoryId'), '/datasets/CosmosDb_Hansa_Collection')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDb_Hansa_Collection')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-07-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Destination_CosmosDB",
+					"type": "LinkedServiceReference"
+				},
+				"type": "CosmosDbMongoDbApiCollection",
+				"typeProperties": {
+					"collection": "hansa"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FTP_Hansa_File')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-07-01-preview",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Hansa_FTP_Storage",
+					"type": "LinkedServiceReference"
+				},
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "STATUS",
+						"type": "String"
+					},
+					{
+						"name": "ISIN",
+						"type": "String"
+					},
+					{
+						"name": "INST_TYPE",
+						"type": "String"
+					},
+					{
+						"name": "TYPE_CODE",
+						"type": "String"
+					},
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "NAME",
+						"type": "String"
+					},
+					{
+						"name": "POS_UNIT",
+						"type": "String"
+					},
+					{
+						"name": "PORTFOLIO",
+						"type": "String"
+					},
+					{
+						"name": "SECTOR",
+						"type": "String"
+					},
+					{
+						"name": "ISSUER",
+						"type": "String"
+					},
+					{
+						"name": "COUNTERPARTY",
+						"type": "String"
+					},
+					{
+						"name": "COUNTRY_OF_RISK",
+						"type": "String"
+					},
+					{
+						"name": "CURR",
+						"type": "String"
+					},
+					{
+						"name": "SPOT",
+						"type": "String"
+					},
+					{
+						"name": "COST_OF_CARRY",
+						"type": "String"
+					},
+					{
+						"name": "CASHFLOW",
+						"type": "String"
+					},
+					{
+						"name": "STRIKE",
+						"type": "String"
+					},
+					{
+						"name": "CONTRACT_SIZE",
+						"type": "String"
+					},
+					{
+						"name": "ISSUE_DATE",
+						"type": "String"
+					},
+					{
+						"name": "MATURITY",
+						"type": "String"
+					},
+					{
+						"name": "CALL",
+						"type": "String"
+					},
+					{
+						"name": "VOLATILITY",
+						"type": "String"
+					},
+					{
+						"name": "UNDERLYING",
+						"type": "String"
+					},
+					{
+						"name": "GOVERNMENT_BOND",
+						"type": "String"
+					},
+					{
+						"name": "COUPON_RATE",
+						"type": "String"
+					},
+					{
+						"name": "LAST_REG_COUP_DATE",
+						"type": "String"
+					},
+					{
+						"name": "ODD_FIRST_COUP",
+						"type": "String"
+					},
+					{
+						"name": "ODD_LAST_COUP",
+						"type": "String"
+					},
+					{
+						"name": "ODD_FIRST_COUP_RATE",
+						"type": "String"
+					},
+					{
+						"name": "TERM",
+						"type": "String"
+					},
+					{
+						"name": "BUSINESS_DAY_RULE",
+						"type": "String"
+					},
+					{
+						"name": "FLOAT_REF_IDX",
+						"type": "String"
+					},
+					{
+						"name": "SPREAD",
+						"type": "String"
+					},
+					{
+						"name": "LAST_RESET_RATE",
+						"type": "String"
+					},
+					{
+						"name": "NOTIONAL",
+						"type": "String"
+					},
+					{
+						"name": "UNDERL_MATURITY",
+						"type": "String"
+					},
+					{
+						"name": "UNDERL_ENTITIES",
+						"type": "String"
+					},
+					{
+						"name": "COMP_WEIGHT",
+						"type": "String"
+					},
+					{
+						"name": "STRUCTURED_CASHFLOW",
+						"type": "String"
+					},
+					{
+						"name": "REF_TYPE",
+						"type": "String"
+					},
+					{
+						"name": "SWAP_NOTIONAL",
+						"type": "String"
+					},
+					{
+						"name": "FIX_COUP_DATE",
+						"type": "String"
+					},
+					{
+						"name": "PREMIUM_START",
+						"type": "String"
+					},
+					{
+						"name": "PREMIUM_END",
+						"type": "String"
+					},
+					{
+						"name": "NOTIONAL_START",
+						"type": "String"
+					},
+					{
+						"name": "NOTIONAL_END",
+						"type": "String"
+					},
+					{
+						"name": "EXERCISE_SCHEDULE",
+						"type": "String"
+					},
+					{
+						"name": "PUTABLE",
+						"type": "String"
+					},
+					{
+						"name": "CORRELATION",
+						"type": "String"
+					},
+					{
+						"name": "CONV_PRICE",
+						"type": "String"
+					},
+					{
+						"name": "CONV_START_DATE",
+						"type": "String"
+					},
+					{
+						"name": "CONV_END_DATE",
+						"type": "String"
+					},
+					{
+						"name": "REDEMPTION_BARRIER",
+						"type": "String"
+					},
+					{
+						"name": "CTD_BOND",
+						"type": "String"
+					},
+					{
+						"name": "EURO_VALUE",
+						"type": "String"
+					},
+					{
+						"name": "KAG_FX",
+						"type": "String"
+					},
+					{
+						"name": "RECOVERY_RATE",
+						"type": "String"
+					},
+					{
+						"name": "AMORTIZING",
+						"type": "String"
+					},
+					{
+						"name": "RATING",
+						"type": "String"
+					},
+					{
+						"name": "FACTOR",
+						"type": "String"
+					},
+					{
+						"name": "INFO",
+						"type": "String"
+					},
+					{
+						"name": "PREMIUM",
+						"type": "String"
+					},
+					{
+						"name": "CALLABLE",
+						"type": "String"
+					},
+					{
+						"name": "STRIKE_BOND_CALL",
+						"type": "String"
+					},
+					{
+						"name": "REDEMPTION_REFERENCE",
+						"type": "String"
+					},
+					{
+						"name": "CONVERTIBLE_AFTER_CALL",
+						"type": "String"
+					},
+					{
+						"name": "CALL_DATE",
+						"type": "String"
+					},
+					{
+						"name": "CALL_TYPE",
+						"type": "String"
+					},
+					{
+						"name": "EXCHANGEABLE",
+						"type": "String"
+					},
+					{
+						"name": "NOTIONAL_PER_BOND",
+						"type": "String"
+					},
+					{
+						"name": "BARRIER",
+						"type": "String"
+					},
+					{
+						"name": "BARRIER_HIT",
+						"type": "String"
+					},
+					{
+						"name": "REBATE",
+						"type": "String"
+					},
+					{
+						"name": "PUT_TYPE",
+						"type": "String"
+					},
+					{
+						"name": "WAL",
+						"type": "String"
+					},
+					{
+						"name": "POOLFACTOR",
+						"type": "String"
+					},
+					{
+						"name": "FIXINGS_SO_FAR",
+						"type": "String"
+					},
+					{
+						"name": "FIXINGS_TOTAL",
+						"type": "String"
+					},
+					{
+						"name": "FIXING_PERIOD",
+						"type": "String"
+					},
+					{
+						"name": "FIXINGS",
+						"type": "String"
+					},
+					{
+						"name": "DIGITAL",
+						"type": "String"
+					},
+					{
+						"name": "DIGITAL_PAYOFF",
+						"type": "String"
+					},
+					{
+						"name": "VV_NAME",
+						"type": "String"
+					},
+					{
+						"name": "OPTION_SCHEDULE",
+						"type": "String"
+					},
+					{
+						"name": "RIC",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ";",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "\\N",
+						"encodingName": null,
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": "SampleDaily_onerecord",
+					"folderPath": "ftp"
+				}
+			}
+		}
+	]
+}

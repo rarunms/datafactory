@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "loadhansadata"
+		},
+		"Destination_CosmosDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Destination_CosmosDB'"
+		},
+		"Hansa_FTP_Storage_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Hansa_FTP_Storage'"
+		},
+		"FTP_Hansa_File_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "SampleDaily_onerecord"
+		},
+		"FTP_Hansa_File_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "ftp"
+		},
+		"Destination_CosmosDB_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "CDMSLevel0"
+		},
+		"Hansa_FTP_Storage_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "cdmsftpstore"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas Token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Destination_CosmosDB_connectionString": {
+						"value": "[parameters('Destination_CosmosDB_connectionString')]"
+					},
+					"Hansa_FTP_Storage_password": {
+						"value": "[parameters('Hansa_FTP_Storage_password')]"
+					},
+					"Destination_CosmosDB_properties_typeProperties_database": {
+						"value": "[parameters('Destination_CosmosDB_properties_typeProperties_database')]"
+					},
+					"Hansa_FTP_Storage_properties_typeProperties_userId": {
+						"value": "[parameters('Hansa_FTP_Storage_properties_typeProperties_userId')]"
+					},
+					"FTP_Hansa_File_properties_typeProperties_fileName": {
+						"value": "[parameters('FTP_Hansa_File_properties_typeProperties_fileName')]"
+					},
+					"FTP_Hansa_File_properties_typeProperties_folderPath": {
+						"value": "[parameters('FTP_Hansa_File_properties_typeProperties_folderPath')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
