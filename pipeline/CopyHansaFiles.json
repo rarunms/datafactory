@@ -12,17 +12,129 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "ftp/SampleDaily_onerecord"
+					},
+					{
+						"name": "Destination",
+						"value": "hansa"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "FileSystemSource",
 						"recursive": false
 					},
+					"sink": {
+						"type": "CosmosDbMongoDbApiSink",
+						"writeBatchTimeout": "00:30:00",
+						"writeBatchSize": 10000,
+						"writeBehavior": "insert"
+					},
 					"enableStaging": false,
-					"dataIntegrationUnits": 0
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"schemaMapping": {
+							"STATUS": "STATUS",
+							"ISIN": "ISIN",
+							"INST_TYPE": "INST_TYPE",
+							"TYPE_CODE": "TYPE_CODE",
+							"ID": "ID",
+							"NAME": "NAME",
+							"POS_UNIT": "POS_UNIT",
+							"PORTFOLIO": "PORTFOLIO",
+							"SECTOR": "SECTOR",
+							"ISSUER": "ISSUER",
+							"COUNTERPARTY": "COUNTERPARTY",
+							"COUNTRY_OF_RISK": "COUNTRY_OF_RISK",
+							"CURR": "CURR",
+							"SPOT": "SPOT",
+							"COST_OF_CARRY": "COST_OF_CARRY",
+							"CASHFLOW": "CASHFLOW",
+							"STRIKE": "STRIKE",
+							"CONTRACT_SIZE": "CONTRACT_SIZE",
+							"ISSUE_DATE": "ISSUE_DATE",
+							"MATURITY": "MATURITY",
+							"CALL": "CALL",
+							"VOLATILITY": "VOLATILITY",
+							"UNDERLYING": "UNDERLYING",
+							"GOVERNMENT_BOND": "GOVERNMENT_BOND",
+							"COUPON_RATE": "COUPON_RATE",
+							"LAST_REG_COUP_DATE": "LAST_REG_COUP_DATE",
+							"ODD_FIRST_COUP": "ODD_FIRST_COUP",
+							"ODD_LAST_COUP": "ODD_LAST_COUP",
+							"ODD_FIRST_COUP_RATE": "ODD_FIRST_COUP_RATE",
+							"TERM": "TERM",
+							"BUSINESS_DAY_RULE": "BUSINESS_DAY_RULE",
+							"FLOAT_REF_IDX": "FLOAT_REF_IDX",
+							"SPREAD": "SPREAD",
+							"LAST_RESET_RATE": "LAST_RESET_RATE",
+							"NOTIONAL": "NOTIONAL",
+							"UNDERL_MATURITY": "UNDERL_MATURITY",
+							"UNDERL_ENTITIES": "UNDERL_ENTITIES",
+							"COMP_WEIGHT": "COMP_WEIGHT",
+							"STRUCTURED_CASHFLOW": "STRUCTURED_CASHFLOW",
+							"REF_TYPE": "REF_TYPE",
+							"SWAP_NOTIONAL": "SWAP_NOTIONAL",
+							"FIX_COUP_DATE": "FIX_COUP_DATE",
+							"PREMIUM_START": "PREMIUM_START",
+							"PREMIUM_END": "PREMIUM_END",
+							"NOTIONAL_START": "NOTIONAL_START",
+							"NOTIONAL_END": "NOTIONAL_END",
+							"EXERCISE_SCHEDULE": "EXERCISE_SCHEDULE",
+							"PUTABLE": "PUTABLE",
+							"CORRELATION": "CORRELATION",
+							"CONV_PRICE": "CONV_PRICE",
+							"CONV_START_DATE": "CONV_START_DATE",
+							"CONV_END_DATE": "CONV_END_DATE",
+							"REDEMPTION_BARRIER": "REDEMPTION_BARRIER",
+							"CTD_BOND": "CTD_BOND",
+							"EURO_VALUE": "EURO_VALUE",
+							"KAG_FX": "KAG_FX",
+							"RECOVERY_RATE": "RECOVERY_RATE",
+							"AMORTIZING": "AMORTIZING",
+							"RATING": "RATING",
+							"FACTOR": "FACTOR",
+							"INFO": "INFO",
+							"PREMIUM": "PREMIUM",
+							"CALLABLE": "CALLABLE",
+							"STRIKE_BOND_CALL": "STRIKE_BOND_CALL",
+							"REDEMPTION_REFERENCE": "REDEMPTION_REFERENCE",
+							"CONVERTIBLE_AFTER_CALL": "CONVERTIBLE_AFTER_CALL",
+							"CALL_DATE": "CALL_DATE",
+							"CALL_TYPE": "CALL_TYPE",
+							"EXCHANGEABLE": "EXCHANGEABLE",
+							"NOTIONAL_PER_BOND": "NOTIONAL_PER_BOND",
+							"BARRIER": "BARRIER",
+							"BARRIER_HIT": "BARRIER_HIT",
+							"REBATE": "REBATE",
+							"PUT_TYPE": "PUT_TYPE",
+							"WAL": "WAL",
+							"POOLFACTOR": "POOLFACTOR",
+							"FIXINGS_SO_FAR": "FIXINGS_SO_FAR",
+							"FIXINGS_TOTAL": "FIXINGS_TOTAL",
+							"FIXING_PERIOD": "FIXING_PERIOD",
+							"FIXINGS": "FIXINGS",
+							"DIGITAL": "DIGITAL",
+							"DIGITAL_PAYOFF": "DIGITAL_PAYOFF",
+							"VV_NAME": "VV_NAME",
+							"OPTION_SCHEDULE": "OPTION_SCHEDULE",
+							"RIC": "RIC"
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "FTP_Hansa_File",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CosmosDbMongoDbApiCollection1",
 						"type": "DatasetReference"
 					}
 				]
