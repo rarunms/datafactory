@@ -1,5 +1,5 @@
 {
-	"name": "CosmosDbMongoDbApiCollection1",
+	"name": "CosmosDb_Hansa_Collection",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Destination_CosmosDB",
