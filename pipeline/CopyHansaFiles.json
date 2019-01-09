@@ -13,9 +13,19 @@
 					"secureInput": false
 				},
 				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": false
+					},
 					"enableStaging": false,
 					"dataIntegrationUnits": 0
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "FTP_Hansa_File",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		]
 	}
