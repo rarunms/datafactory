@@ -31,6 +31,14 @@
 			"type": "string",
 			"defaultValue": "cdmsftpstore"
 		},
+		"Archive_Folder_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"Archive_Folder_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "archive"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -75,6 +83,12 @@
 					},
 					"FTP_Hansa_File_properties_typeProperties_folderPath": {
 						"value": "[parameters('FTP_Hansa_File_properties_typeProperties_folderPath')]"
+					},
+					"Archive_Folder_properties_typeProperties_fileName": {
+						"value": "[parameters('Archive_Folder_properties_typeProperties_fileName')]"
+					},
+					"Archive_Folder_properties_typeProperties_folderPath": {
+						"value": "[parameters('Archive_Folder_properties_typeProperties_folderPath')]"
 					}
 				}
 			},

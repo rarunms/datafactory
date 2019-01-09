@@ -22,6 +22,12 @@
 		},
 		"Hansa_FTP_Storage_properties_typeProperties_userId": {
 			"value": "cdmsftpstore"
+		},
+		"Archive_Folder_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"Archive_Folder_properties_typeProperties_folderPath": {
+			"value": "archive"
 		}
 	}
 }
